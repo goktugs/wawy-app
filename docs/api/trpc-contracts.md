@@ -8,12 +8,13 @@
 
 ```ts
 {
-  campaignId: string;
+    campaignId: string;
 }
 ```
 
 Notes:
-- result size is fixed to Top 20 by assignment scope
+
+- result size is fixed to Top 20 by assignment scopes.
 - clients do not control pagination/limit in Part 1
 
 ## Output
