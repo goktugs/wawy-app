@@ -3,7 +3,7 @@
 ### Summary
 This plan locks down the **first assignment step** (Part 1) end-to-end in an implementation-ready way:
 - a tRPC endpoint returning **Top 20 creators** for a given `campaignId`
-- **explainable scoring** (`totalScore + scoreBreakdown + reasons`)
+- **explainable scoring** (`totalScore + scoreBreakdown + penalties + matchedSignals`)
 - hybrid scoring (why):
 1. A pure hard-filter approach shrinks the candidate pool too aggressively.
 2. A pure weighted approach can rank risky creators too high.
@@ -15,7 +15,7 @@ Chosen decisions:
 - Hard rules: `brand safety`, `follower range`
 - Soft rule: `watchtime` (penalty)
 - Weight profile: `Balanced explainable`
-- Response: `detailed breakdown + reasons`
+- Response: `detailed breakdown + matched signals`
 
 ---
 
@@ -34,7 +34,7 @@ Chosen decisions:
    - `campaignId`
    - `generatedAt`
    - `weights`
-   - `results: Array<{ creatorId, totalScore, scoreBreakdown, penalties, reasons, matchedSignals }>`
+   - `results: Array<{ creatorId, totalScore, scoreBreakdown, penalties, matchedSignals }>`
 3. `scoreBreakdown` fields (0..weight):
    - `nicheMatch` (25)
    - `audienceCountryMatch` (20)
@@ -120,7 +120,7 @@ Chosen decisions:
 
 ## Acceptance Criteria
 1. Endpoint returns Top 20 creators per campaign with explainable scoring.
-2. Hard filters and soft penalties are visible in response (reasons/penalties).
+2. Hard filters and soft penalties are visible in response (summary/penalties).
 3. Score range is 0-100 and deterministic.
 4. README clearly explains scoring logic.
 5. Documentation and API contracts are consistent with fixed Top 20 behavior.

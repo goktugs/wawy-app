@@ -13,7 +13,7 @@ Part 1 delivers a campaign matching endpoint that returns Top 20 creators with e
    - hard filters (brand safety, follower range)
    - weighted scoring (niche, audience country, engagement, watchtime, hook)
 5. Results are ranked and truncated to Top 20.
-6. API returns `totalScore`, `scoreBreakdown`, penalties, and reasons.
+6. API returns `totalScore`, `scoreBreakdown`, penalties, and matched signals.
 
 ## Main Components
 

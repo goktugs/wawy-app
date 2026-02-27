@@ -45,7 +45,6 @@ Notes:
     penalties: {
       watchTimePenalty: number;
     };
-    reasons: string[];
     matchedSignals: string[];
   }>;
   summary?: {
