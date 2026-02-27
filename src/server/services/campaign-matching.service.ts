@@ -2,16 +2,12 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { getCampaignById } from "@/server/data/repositories/campaign.repository";
 import { listCreators } from "@/server/data/repositories/creator.repository";
+import { applyHardFilters } from "@/server/domain/matching/filters";
+import { rankCreators } from "@/server/domain/matching/ranking";
+import { scoreCreators } from "@/server/domain/matching/scoring";
+import { MATCHING_WEIGHTS } from "@/server/domain/matching/weights";
 import { TOP_RESULTS_LIMIT } from "@/lib/constants";
-
-const DEFAULT_WEIGHTS = {
-  nicheMatch: 25,
-  audienceCountryMatch: 20,
-  engagementScore: 15,
-  watchTimeScore: 15,
-  followerFitScore: 15,
-  hookMatchScore: 10
-};
+import type { ScoreWeights } from "@/types/matching";
 
 type GetTopCreatorsParams = {
   supabase: SupabaseClient;
@@ -24,15 +20,14 @@ export async function getTopCreatorsForCampaign({
 }: GetTopCreatorsParams): Promise<{
   campaignId: string;
   generatedAt: string;
-  weights: typeof DEFAULT_WEIGHTS;
+  weights: ScoreWeights;
   results: Array<{
     creatorId: string;
     totalScore: number;
-    scoreBreakdown: typeof DEFAULT_WEIGHTS;
+    scoreBreakdown: ScoreWeights;
     penalties: {
       watchTimePenalty: number;
     };
-    reasons: string[];
     matchedSignals: string[];
   }>;
   summary: {
@@ -46,17 +41,25 @@ export async function getTopCreatorsForCampaign({
   }
 
   const creators = await listCreators(supabase);
+  const { eligible, rejectionStats } = applyHardFilters(campaign, creators);
+  const scored = scoreCreators(campaign, eligible, MATCHING_WEIGHTS);
+  const ranked = rankCreators(scored);
+  const top = ranked.slice(0, TOP_RESULTS_LIMIT);
 
-  // Part 1: scoring/ranking implementation comes in matching domain step.
-  // This service now wires real DB reads and preserves the contract shape.
   return {
     campaignId,
     generatedAt: new Date().toISOString(),
-    weights: DEFAULT_WEIGHTS,
-    results: [],
+    weights: MATCHING_WEIGHTS,
+    results: top.map((item) => ({
+      creatorId: item.creator.id,
+      totalScore: item.totalScore,
+      scoreBreakdown: item.scoreBreakdown,
+      penalties: item.penalties,
+      matchedSignals: item.matchedSignals
+    })),
     summary: {
       rejectionStats: {
-        candidatePool: creators.length,
+        ...rejectionStats,
         topLimit: TOP_RESULTS_LIMIT
       }
     }

@@ -49,4 +49,4 @@ Return:
 - `totalScore`
 - per-signal score breakdown
 - penalties
-- inclusion/exclusion reasons
+- matched signals

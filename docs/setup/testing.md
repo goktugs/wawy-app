@@ -16,4 +16,4 @@
 
 - Top 20 output works for all campaigns.
 - `totalScore` equals score breakdown minus penalties.
-- Hard-filter rejections are traceable in summary or reasons.
+- Hard-filter rejections are traceable in summary.
