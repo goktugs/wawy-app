@@ -1,5 +1,28 @@
 # wavy-app
 
+## Bootstrap Status (Part 1)
+
+- Monolith app skeleton is initialized with `Next.js + TypeScript + tRPC`.
+- tRPC route is available at `/api/trpc`.
+- `campaign.getTopCreators` exists as a placeholder contract endpoint.
+- Supabase schema/seed implementation is planned in next branches.
+
+## Run
+
+1. `cp .env.example .env.local`
+2. Fill environment variables in `.env.local`
+3. `npm install`
+4. `npm run dev`
+
+## NPM Scripts
+
+- `npm run dev` -> start local dev server
+- `npm run build` -> production build
+- `npm run start` -> run production server
+- `npm run lint` -> lint checks
+- `npm run typecheck` -> TypeScript checks
+- `npm run test` -> run tests
+
 ## Documentation
 
 - System Overview -> [docs/architecture/system-overview.md](docs/architecture/system-overview.md)
