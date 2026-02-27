@@ -13,3 +13,12 @@
 ## Plans
 
 - Part 1 Plan -> [docs/plans/PLAN_PART1_CAMPAIGN_MATCHING.md](docs/plans/PLAN_PART1_CAMPAIGN_MATCHING.md)
+
+## GitHub Actions
+
+- CI: [ci.yml](.github/workflows/ci.yml)
+  - Runs on push to `develop` and PRs targeting `develop/main/master`
+- Release: [release.yml](.github/workflows/release.yml)
+  - Runs on push to `main/master`
+- Sync PR: [develop-to-main-pr.yml](.github/workflows/develop-to-main-pr.yml)
+  - Opens/updates a PR from `develop` to `main` on every push to `develop`
