@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed:build": "tsc -p scripts/tsconfig.json",
+    "seed": "npm run seed:build && node .tmp/scripts/seed.js",
+    "seed:verify": "npm run seed:build && node .tmp/scripts/verify-seed.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",

@@ -5,7 +5,7 @@
 - Monolith app skeleton is initialized with `Next.js + TypeScript + tRPC`.
 - tRPC route is available at `/api/trpc`.
 - `campaign.getTopCreators` exists as a placeholder contract endpoint.
-- Supabase schema/seed implementation is planned in next branches.
+- Supabase migration files for Part 1 schema are added in `supabase/migrations`.
 
 ## Run
 
@@ -22,6 +22,8 @@
 - `npm run lint` -> lint checks
 - `npm run typecheck` -> TypeScript checks
 - `npm run test` -> run tests
+- `npm run seed` -> import `data/*.json` into Supabase with idempotent upsert
+- `npm run seed:verify` -> verify row counts and sample array/json fields
 
 ## Documentation
 
