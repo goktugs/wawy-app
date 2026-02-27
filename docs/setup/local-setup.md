@@ -17,6 +17,14 @@
 
 1. `npm install`
 2. Apply database migration(s).
-3. Run seed command for campaigns/creators JSON.
+3. Run seed pipeline:
+   - `npm run seed`
+   - `npm run seed:verify`
 4. `npm run dev`
 5. Verify tRPC endpoint with a sample `campaignId`.
+
+## Seed Scripts
+
+- `scripts/seed.ts`: validates + maps `data/*.json` and upserts into Supabase.
+- `scripts/verify-seed.ts`: verifies row counts and sample array/json fields.
+- `scripts/_env.ts`: loads `.env.local` for seed scripts.

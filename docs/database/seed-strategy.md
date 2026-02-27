@@ -4,6 +4,8 @@
 
 - `data/campaigns.json`
 - `data/creators.json`
+- `scripts/seed.ts`
+- `scripts/verify-seed.ts`
 
 Note:
 - For this assignment, keeping the provided datasets in-repo is recommended for reproducibility.
@@ -17,6 +19,14 @@ Note:
 2. Map fields to DB column names.
 3. Upsert by primary key (`id`) to keep seed idempotent.
 4. Log inserted/updated counts.
+
+## Run Commands
+
+1. `npm run seed`
+2. `npm run seed:verify`
+
+Notes:
+- `npm run seed` compiles script files first (`npm run seed:build`), then executes output with Node.js.
 
 ## Idempotency Rule
 
