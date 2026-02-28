@@ -11,8 +11,9 @@
 
 1. `cp .env.example .env.local`
 2. Fill environment variables in `.env.local`
-3. `npm install`
-4. `npm run dev`
+3. Use Node.js 20 (`nvm use` if you use nvm)
+4. `npm install`
+5. `npm run dev`
 
 ## NPM Scripts
 

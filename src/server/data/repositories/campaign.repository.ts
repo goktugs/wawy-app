@@ -25,3 +25,14 @@ export async function getCampaignById(
 
   return mapCampaignRowToCampaign(data);
 }
+
+export async function listCampaigns(supabase: SupabaseClient): Promise<Array<{ id: string; brand: string }>> {
+  const { data, error } = await supabase.from("campaigns").select("id, brand").order("id", { ascending: true });
+
+  if (error) {
+    throw new Error(`Failed to fetch campaigns: ${error.message}`);
+  }
+
+  const rows = (data ?? []) as Array<{ id: string; brand: string }>;
+  return rows;
+}

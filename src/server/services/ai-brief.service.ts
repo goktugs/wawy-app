@@ -7,6 +7,7 @@ import { getCreatorById } from "@/server/data/repositories/creator.repository";
 import { parseAiBriefFromText } from "@/server/domain/ai/brief.parse";
 import type { AiBriefOutput } from "@/server/domain/ai/brief.schema";
 import { createChatCompletion } from "@/server/integrations/openai-client";
+import type { GenerateBriefResponse } from "@/types/contracts";
 
 const DEFAULT_MODEL = "gpt-4.1-mini";
 
@@ -49,13 +50,7 @@ export async function generateBriefForCampaignCreator({
   supabase,
   campaignId,
   creatorId
-}: GenerateBriefParams): Promise<{
-  campaignId: string;
-  creatorId: string;
-  generatedAt: string;
-  cached: boolean;
-  brief: AiBriefOutput;
-}> {
+}: GenerateBriefParams): Promise<GenerateBriefResponse> {
   const cached = await getCachedBrief(supabase, campaignId, creatorId);
   if (cached) {
     return {

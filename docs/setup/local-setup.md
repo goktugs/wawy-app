@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Node.js LTS
+- Node.js 20
 - npm
 - Supabase project (local or cloud)
 
@@ -15,13 +15,14 @@
 
 ## Setup Steps
 
-1. `npm install`
-2. Apply database migration(s).
-3. Run seed pipeline:
+1. `nvm use` (reads `.nvmrc`) or switch manually to Node.js 20
+2. `npm install`
+3. Apply database migration(s).
+4. Run seed pipeline:
    - `npm run seed`
    - `npm run seed:verify`
-4. `npm run dev`
-5. Verify tRPC endpoint with a sample `campaignId`.
+5. `npm run dev`
+6. Verify tRPC endpoint with a sample `campaignId`.
 
 ## Seed Scripts
 
