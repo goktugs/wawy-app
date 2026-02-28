@@ -22,6 +22,7 @@
 - I implemented cache-first brief generation by `campaignId + creatorId` to reduce repeated LLM calls.
 - Retry/repair is intentionally bounded to one extra attempt to control both cost and complexity.
 - In this iteration, I prioritized clean separation (`data`, `domain`, `services`, `trpc`) over aggressive micro-optimizations.
+- Tests are also not implemented in this iteration to focus on core functionality, but I would add unit tests for scoring logic and integration tests for tRPC routes in a real codebase.
 
 ## Run
 
@@ -60,8 +61,8 @@
 ## GitHub Actions
 
 - CI: [ci.yml](.github/workflows/ci.yml)
-  - Runs on push to `develop` and PRs targeting `develop/main/master`
+    - Runs on push to `develop` and PRs targeting `develop/main/master`
 - Release: [release.yml](.github/workflows/release.yml)
-  - Runs on push to `main/master`
+    - Runs on push to `main/master`
 - Sync Develop to Main: [develop-to-main-pr.yml](.github/workflows/develop-to-main-pr.yml)
-  - Runs on push to `develop` and automatically merges `develop` into `main/master` (if target branch exists)
+    - Runs on push to `develop` and automatically merges `develop` into `main/master` (if target branch exists)
