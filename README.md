@@ -24,6 +24,8 @@
 - In this iteration, I prioritized clean separation (`data`, `domain`, `services`, `trpc`) over aggressive micro-optimizations.
 - Tests are also not implemented in this iteration to focus on core functionality, but I would add unit tests for scoring logic and integration tests for tRPC routes in a real codebase.
 
+<img width="2195" height="1412" alt="image" src="https://github.com/user-attachments/assets/1ce0f60a-9035-4da5-aa24-d755197f2ac6" />
+
 ## Run
 
 1. `cp .env.example .env.local`
