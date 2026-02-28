@@ -1,4 +1,4 @@
-name: Sync Develop to Main PR
+name: Sync Develop to Main
 
 on:
   push:
@@ -7,21 +7,35 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: write
 
 jobs:
-  open-or-update-pr:
+  merge-develop:
     runs-on: ubuntu-latest
     steps:
-      - name: Create or update PR (develop -> main)
-        uses: repo-sync/pull-request@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          source_branch: develop
-          destination_branch: main
-          pr_title: "chore(release): sync develop into main"
-          pr_body: |
-            Automated sync PR from `develop` to `main`.
-            - Trigger: push to develop
-            - Merge only after CI passes and review is complete
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync develop into main/master if branch exists
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for target in main master; do
+            if git ls-remote --exit-code --heads origin "$target" >/dev/null 2>&1; then
+              echo "Syncing develop -> $target"
+              git checkout "$target"
+              git pull --ff-only origin "$target"
+              git merge --no-ff origin/develop -m "chore(sync): merge develop into $target"
+              git push origin "$target"
+            else
+              echo "Branch '$target' does not exist, skipping."
+            fi
+          done
