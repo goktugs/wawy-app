@@ -7,7 +7,7 @@ import { rankCreators } from "@/server/domain/matching/ranking";
 import { scoreCreators } from "@/server/domain/matching/scoring";
 import { MATCHING_WEIGHTS } from "@/server/domain/matching/weights";
 import { TOP_RESULTS_LIMIT } from "@/lib/constants";
-import type { ScoreWeights } from "@/types/matching";
+import type { MatchingResponse } from "@/types/contracts";
 
 type GetTopCreatorsParams = {
   supabase: SupabaseClient;
@@ -17,23 +17,7 @@ type GetTopCreatorsParams = {
 export async function getTopCreatorsForCampaign({
   supabase,
   campaignId
-}: GetTopCreatorsParams): Promise<{
-  campaignId: string;
-  generatedAt: string;
-  weights: ScoreWeights;
-  results: Array<{
-    creatorId: string;
-    totalScore: number;
-    scoreBreakdown: ScoreWeights;
-    penalties: {
-      watchTimePenalty: number;
-    };
-    matchedSignals: string[];
-  }>;
-  summary: {
-    rejectionStats: Record<string, number>;
-  };
-}> {
+}: GetTopCreatorsParams): Promise<MatchingResponse> {
   const campaign = await getCampaignById(supabase, campaignId);
 
   if (!campaign) {
