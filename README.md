@@ -3,7 +3,7 @@
 ## Assignment Status
 
 - Monolith app skeleton is initialized with `Next.js + TypeScript + tRPC`.
-- tRPC route is available at `/api/trpc`.
+- Versioned tRPC route is available at `/api/v1/trpc`.
 - Part 1 endpoint `campaign.getTopCreators` is implemented with hybrid matching (hard filters + weighted scoring) and returns Top 20 creators with explainable output.
 - Part 2 endpoint `campaign.generateBrief` is implemented with real LLM integration, strict JSON validation, retry/repair flow, and DB cache.
 - Supabase migration files for Part 1 and Part 2 are added in `supabase/migrations`.

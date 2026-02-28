@@ -15,7 +15,7 @@ export default function HomePage() {
   } = useQuery<CampaignOption[], Error>({
     queryKey: ["campaigns"],
     queryFn: async () => {
-      const res = await fetch("/api/trpc/campaign.listCampaigns");
+      const res = await fetch("/api/v1/trpc/campaign.listCampaigns");
       const data = (await res.json()) as TrpcEnvelope<CampaignOption[]>;
 
       if (!res.ok || data.error) {
@@ -37,7 +37,7 @@ export default function HomePage() {
   const matchingMutation = useMutation<MatchingResponse, Error, string>({
     mutationFn: async (selectedCampaignId) => {
       const input = encodeURIComponent(JSON.stringify({ json: { campaignId: selectedCampaignId } }));
-      const res = await fetch(`/api/trpc/campaign.getTopCreators?input=${input}`);
+      const res = await fetch(`/api/v1/trpc/campaign.getTopCreators?input=${input}`);
       const data = (await res.json()) as TrpcEnvelope<MatchingResponse>;
 
       if (!res.ok || data.error) {
@@ -54,7 +54,7 @@ export default function HomePage() {
   });
   const briefMutation = useMutation<GenerateBriefResponse, Error, { campaignId: string; creatorId: string }>({
     mutationFn: async (params) => {
-      const res = await fetch("/api/trpc/campaign.generateBrief", {
+      const res = await fetch("/api/v1/trpc/campaign.generateBrief", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ json: params })
@@ -111,8 +111,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(125deg,#ecfccb_0%,#f0f9ff_45%,#e0f2fe_100%)] p-4 font-sans text-slate-900">
-      <h1 className="mb-3 text-3xl tracking-tight">Campaign Flow</h1>
+    <main className="min-h-screen bg-[radial-gradient(circle_at_15%_15%,#164e63_0%,transparent_35%),radial-gradient(circle_at_85%_85%,#4c1d95_0%,transparent_35%),linear-gradient(140deg,#09090b_0%,#111827_45%,#020617_100%)] p-4 font-sans text-zinc-100">
+      <h1 className="mb-3 text-3xl tracking-tight text-zinc-50">Campaign Flow</h1>
 
       <section className="grid auto-rows-fr grid-cols-[repeat(auto-fit,minmax(360px,1fr))] gap-3">
         <CreatorsPanel
