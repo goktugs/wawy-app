@@ -46,30 +46,10 @@ jobs:
         run: |
           npm run | grep -q " test" && npm run test -- --ci || echo "No test script found, skipping."
 
-      - name: Setup Vercel CLI
+      - name: Trigger Render Deploy
         if: steps.detect.outputs.has_package == 'true'
-        run: npm install --global vercel@latest
-
-      - name: Pull Vercel project settings
-        if: steps.detect.outputs.has_package == 'true'
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Build deployment artifacts
-        if: steps.detect.outputs.has_package == 'true'
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: Deploy to Vercel Production
-        if: steps.detect.outputs.has_package == 'true'
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
 
       - name: Bootstrap notice
         if: steps.detect.outputs.has_package != 'true'
