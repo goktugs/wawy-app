@@ -44,3 +44,17 @@
 - `creators_primary_hook_idx` on `creators(primary_hook_type)`
 - `creators_country_idx` on `creators(country)`
 - `creators_audience_top_countries_gin` on `creators using gin(audience_top_countries)`
+
+## `ai_brief_cache` (Part 2)
+
+- `id` bigint generated identity primary key
+- `campaign_id` text not null
+- `creator_id` text not null
+- `payload` jsonb not null
+- `model` text not null
+- `created_at` timestamptz not null default `now()`
+- `updated_at` timestamptz not null default `now()`
+
+## Additional Indexes (Part 2)
+
+- unique `ai_brief_cache_campaign_creator_uq` on `ai_brief_cache(campaign_id, creator_id)`

@@ -38,6 +38,7 @@
 ## Plans
 
 - Part 1 Plan -> [docs/plans/PLAN_PART1_CAMPAIGN_MATCHING.md](docs/plans/PLAN_PART1_CAMPAIGN_MATCHING.md)
+- Part 2 Plan -> [docs/plans/PLAN_PART2_AI_BRIEF_GENERATOR.md](docs/plans/PLAN_PART2_AI_BRIEF_GENERATOR.md)
 
 ## GitHub Actions
 
