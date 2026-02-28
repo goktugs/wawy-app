@@ -1,11 +1,27 @@
 # wavy-app
 
-## Bootstrap Status (Part 1)
+## Assignment Status
 
 - Monolith app skeleton is initialized with `Next.js + TypeScript + tRPC`.
 - tRPC route is available at `/api/trpc`.
-- `campaign.getTopCreators` exists as a placeholder contract endpoint.
-- Supabase migration files for Part 1 schema are added in `supabase/migrations`.
+- Part 1 endpoint `campaign.getTopCreators` is implemented with hybrid matching (hard filters + weighted scoring) and returns Top 20 creators with explainable output.
+- Part 2 endpoint `campaign.generateBrief` is implemented with real LLM integration, strict JSON validation, retry/repair flow, and DB cache.
+- Supabase migration files for Part 1 and Part 2 are added in `supabase/migrations`.
+
+## Scoring Summary
+
+- I start with hard filters: creators are rejected if they have a brand-safety conflict or if their follower count is outside the campaign range.
+- I score only the remaining creators using 6 signals: niche match, audience country match, engagement, watch time, follower fit, and hook match.
+- If watch time is below the campaign minimum, I apply a score penalty instead of hard-rejecting.
+- Ranking order is: `totalScore`, then `engagementRate`, then `followers`.
+
+## Trade-offs and Development Notes
+
+- I kept matching logic in service/domain layers instead of pushing everything into SQL, so rules stay explicit and easy to change.
+- I added runtime validation (`zod`) at the AI boundary to prevent malformed output from breaking downstream code.
+- I implemented cache-first brief generation by `campaignId + creatorId` to reduce repeated LLM calls.
+- Retry/repair is intentionally bounded to one extra attempt to control both cost and complexity.
+- In this iteration, I prioritized clean separation (`data`, `domain`, `services`, `trpc`) over aggressive micro-optimizations.
 
 ## Run
 
@@ -47,5 +63,5 @@
   - Runs on push to `develop` and PRs targeting `develop/main/master`
 - Release: [release.yml](.github/workflows/release.yml)
   - Runs on push to `main/master`
-- Sync PR: [develop-to-main-pr.yml](.github/workflows/develop-to-main-pr.yml)
-  - Opens/updates a PR from `develop` to `main` on every push to `develop`
+- Sync Develop to Main: [develop-to-main-pr.yml](.github/workflows/develop-to-main-pr.yml)
+  - Runs on push to `develop` and automatically merges `develop` into `main/master` (if target branch exists)
