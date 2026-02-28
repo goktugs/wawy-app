@@ -8,7 +8,7 @@ import { loadLocalEnv, requireEnv } from "./_env";
 
 loadLocalEnv();
 
-const supabase = createClient(requireEnv("SUPABASE_URL"), requireEnv("SUPABASE_SERVICE_ROLE_KEY"));
+const supabase = createClient(requireEnv("SUPABASE_URL"), requireEnv("SUPABASE_ANON_KEY"));
 
 const campaignSchema = z.object({
   id: z.string(),

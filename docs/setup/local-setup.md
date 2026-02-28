@@ -11,7 +11,6 @@
 - `DATABASE_URL`
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
 - `OPENAI_API_KEY` (Part 2 AI brief generation)
 
 ## Setup Steps
